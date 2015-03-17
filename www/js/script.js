@@ -1,14 +1,6 @@
 window.onload = function() {
-	alert("here");  
-
 	var username = "iwood@uwo.ca";
 	var password = "thisisapassword";
-
-	console.log("sdkfsdjkfjlkds");
-
-	$("#spiffy").val('SPIFFY');
-
-	
 
 	$.ajax({
 		type: 'POST',
@@ -18,33 +10,34 @@ window.onload = function() {
 			'Content-Type' : 'application/x-www-form-urlencoded'
 		}
 	}).done(function(token) {
-		alert("in dis bitch");
 
-		// MAKE SURE TO ENCODE URI ENCODE THIS BITCH
-		var query = "SELECT course_id FROM spiffy.developer_course_student WHERE student_email = 'iwood@uwo.ca';";
-
+		var query = "SELECT course_id FROM spiffy.developer_course_student WHERE student_email = '" + username + "';";
 		$.ajax({
 			type: 'POST',
-			url: 'http://developer.kb.dexit.co/access/stores/course_admin/query?query=' + query,
+			url: 'http://developer.kb.dexit.co/access/stores/course_admin/query?query=' + encodeURIComponent(query),
 			headers: {
-				'Authorization':'Bearer' + token.access_token
+				'Authorization':'Bearer ' + token.access_token
 			}
-		}).done(function(courses) {
-			alert("in da other bitch");
+		}).done(function(data) {
+
+			for (var i = 0; i < data.result.rows.length; i++)
+			{
+				var buttonID = data.result.rows[i][0];
+				var $button = $('<button/>', 
+				{
+			  		type: 'button',
+					'class': 'dynBtn',
+					id: buttonID,
+					text: buttonID,
+					click: function() 
+					{
+						window.alert('Hello! My id is '+ this.id);
+					}
+				});
+				$button.appendTo('#buttons');
+			}
 			
 		});
 
 	});
-
-	alert("over here");
-
-	
-
-	// token.getToken('iwood@uwo.ca', 'thisisapassword', function(_token) {
-	// 	var query = "SELECT course_id FROM spiffy.developer_course_student WHERE student_email = 'iwood@uwo.ca'";
-	// 	token.query(query, "course_admin", _token, function(Returned_Value) {
-	// 		console.log("here");
-	// 		debugger;
-	// 	});
-	// });
 }
