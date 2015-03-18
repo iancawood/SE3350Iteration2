@@ -32,6 +32,7 @@ window.onload = function() {
 					click: function() 
 					{
 						window.alert('Hello! My id is '+ this.id);
+						$('playerFrame').attr('src', 'http://player.dexit.co/player/?course=' + this.id + '-spiffy');
 					}
 				});
 				$button.appendTo('#buttons');
