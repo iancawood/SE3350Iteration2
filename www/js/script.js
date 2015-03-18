@@ -31,8 +31,8 @@ window.onload = function() {
 					text: buttonID,
 					click: function() 
 					{
-						window.alert('Hello! My id is '+ this.id);
-						$('playerFrame').attr('src', 'http://player.dexit.co/player/?course=' + this.id + '-spiffy');
+						window.alert('Course changed to '+ this.id + '.');
+						$('#playerFrame').attr('src', 'http://player.dexit.co/player/?course=' + this.id + '-spiffy');
 					}
 				});
 				$button.appendTo('#buttons');
